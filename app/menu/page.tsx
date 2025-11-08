@@ -24,13 +24,136 @@ export default function MenuPage() {
 
   const menuItems = {
     veg: [
-      { id: "1", name: "Idli", price: 50, description: "Steamed rice cakes with sambhar" },
-      { id: "2", name: "Dosa", price: 60, description: "Crispy fermented rice crepes" },
-      { id: "3", name: "Pongal", price: 55, description: "Sweet rice and lentil dish" },
+      {
+        id: "1",
+        name: "Idli",
+        price: 50,
+        description: "Steamed rice cakes with sambhar",
+        color: "bg-gradient-to-br from-yellow-100 to-orange-100",
+        image: "/idli-south-indian-steamed-rice-cakes.jpg",
+      },
+      {
+        id: "2",
+        name: "Dosa",
+        price: 60,
+        description: "Crispy fermented rice crepes",
+        color: "bg-gradient-to-br from-amber-200 to-yellow-200",
+        image: "/dosa-crispy-rice-crepes.jpg",
+      },
+      {
+        id: "3",
+        name: "Pongal",
+        price: 55,
+        description: "Sweet rice and lentil dish",
+        color: "bg-gradient-to-br from-red-200 to-orange-300",
+        image: "/pongal-sweet-rice-lentil.jpg",
+      },
+      {
+        id: "6",
+        name: "Uttapam",
+        price: 65,
+        description: "Thick rice pancake with veggies",
+        color: "bg-gradient-to-br from-yellow-300 to-orange-200",
+        image: "/uttapam-thick-rice-pancake.jpg",
+      },
+      {
+        id: "7",
+        name: "Medu Vada",
+        price: 40,
+        description: "Soft fried lentil donuts",
+        color: "bg-gradient-to-br from-orange-300 to-amber-200",
+        image: "/medu-vada-fried-lentil.jpg",
+      },
+      {
+        id: "8",
+        name: "Chikhalali",
+        price: 45,
+        description: "Rava fried crispy snack",
+        color: "bg-gradient-to-br from-yellow-200 to-amber-200",
+        image: "/chikhalali-crispy-snack.jpg",
+      },
+      {
+        id: "9",
+        name: "Vegetable Biryani",
+        price: 100,
+        description: "Fragrant rice with mixed vegetables",
+        color: "bg-gradient-to-br from-green-200 to-emerald-300",
+        image: "/vegetable-biryani-rice.jpg",
+      },
+      {
+        id: "10",
+        name: "Sambar Rice",
+        price: 55,
+        description: "Rice mixed with lentil curry",
+        color: "bg-gradient-to-br from-yellow-100 to-orange-200",
+        image: "/sambar-rice-lentil-curry.jpg",
+      },
     ],
     nonveg: [
-      { id: "4", name: "Chicken Biryani", price: 150, description: "Fragrant rice with chicken" },
-      { id: "5", name: "Chicken Meals", price: 120, description: "Complete meal with chicken" },
+      {
+        id: "4",
+        name: "Chicken Biryani",
+        price: 150,
+        description: "Fragrant rice with tender chicken",
+        color: "bg-gradient-to-br from-red-300 to-orange-400",
+        image: "/chicken-biryani-fragrant-rice.jpg",
+      },
+      {
+        id: "5",
+        name: "Chicken Meals",
+        price: 120,
+        description: "Complete meal with grilled chicken",
+        color: "bg-gradient-to-br from-amber-300 to-yellow-300",
+        image: "/chicken-meals-grilled.jpg",
+      },
+      {
+        id: "11",
+        name: "Chicken Dosa",
+        price: 90,
+        description: "Crispy dosa stuffed with chicken",
+        color: "bg-gradient-to-br from-orange-200 to-amber-300",
+        image: "/chicken-dosa-crispy.jpg",
+      },
+      {
+        id: "12",
+        name: "Mutton Biryani",
+        price: 180,
+        description: "Fragrant rice with tender mutton",
+        color: "bg-gradient-to-br from-red-400 to-orange-500",
+        image: "/mutton-biryani-fragrant.jpg",
+      },
+      {
+        id: "13",
+        name: "Fish Fry",
+        price: 130,
+        description: "Spicy fried fish with coconut",
+        color: "bg-gradient-to-br from-yellow-400 to-orange-300",
+        image: "/fish-fry-spicy.jpg",
+      },
+      {
+        id: "14",
+        name: "Chicken Tikka",
+        price: 110,
+        description: "Marinated and grilled chicken pieces",
+        color: "bg-gradient-to-br from-red-300 to-amber-200",
+        image: "/chicken-tikka-grilled.jpg",
+      },
+      {
+        id: "15",
+        name: "Egg Biryani",
+        price: 80,
+        description: "Rice with boiled eggs",
+        color: "bg-gradient-to-br from-yellow-300 to-orange-300",
+        image: "/egg-biryani-rice.jpg",
+      },
+      {
+        id: "16",
+        name: "Chicken Curry Rice",
+        price: 100,
+        description: "Rice with spicy chicken curry",
+        color: "bg-gradient-to-br from-red-200 to-orange-400",
+        image: "/placeholder.svg?height=200&width=200",
+      },
     ],
   }
 
@@ -100,7 +223,7 @@ export default function MenuPage() {
             </div>
 
             {/* Menu Items Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {menuItems[category].map((item) => (
                 <MenuItem
                   key={item.id}
