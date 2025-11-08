@@ -62,7 +62,7 @@ export default function MenuPage() {
       <header className="bg-primary text-primary-foreground sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">MCE Canteen</h1>
+            <h1 className="text-2xl font-bold">MEC Canteen</h1>
             <p className="text-sm opacity-90">Welcome, {user?.username}</p>
           </div>
           <Button onClick={handleLogout} className="bg-primary-foreground text-primary hover:bg-opacity-90">

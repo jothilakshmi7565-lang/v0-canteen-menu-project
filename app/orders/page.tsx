@@ -20,8 +20,8 @@ export default function OrdersPage() {
 
     // Simulate fetching orders
     const mockOrders = [
-      { id: "MCE-1234567890", date: "2 hours ago", amount: 245, status: "Delivered" },
-      { id: "MCE-1234567891", date: "Yesterday", amount: 320, status: "Delivered" },
+      { id: "MEC-1234567890", date: "2 hours ago", amount: 245, status: "Delivered" },
+      { id: "MEC-1234567891", date: "Yesterday", amount: 320, status: "Delivered" },
     ]
     setOrders(mockOrders)
   }, [router])

@@ -14,9 +14,9 @@ export default function PaymentPage() {
   const [orderId, setOrderId] = useState("")
 
   const methodDetails = {
-    upi: { name: "UPI", upiId: "mcecanteen@upi" },
+    upi: { name: "UPI", upiId: "meccanteen@upi" },
     phonepe: { name: "PhonePe", phone: "9000000000" },
-    googlepay: { name: "Google Pay", email: "pay@mcecanteen.com" },
+    googlepay: { name: "Google Pay", email: "pay@meccanteen.com" },
   }
 
   const current = methodDetails[method as keyof typeof methodDetails] || methodDetails.upi
@@ -29,7 +29,7 @@ export default function PaymentPage() {
       // Simulate payment processing
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      const newOrderId = `MCE-${Date.now()}`
+      const newOrderId = `MEC-${Date.now()}`
       setOrderId(newOrderId)
       setStatus("success")
 

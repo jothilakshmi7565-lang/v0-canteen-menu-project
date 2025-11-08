@@ -38,7 +38,7 @@ export default function AdminDashboard() {
 
   const mockOrders: Order[] = [
     {
-      id: "MCE-1001",
+      id: "MEC-1001",
       items: [
         { name: "Idli", quantity: 2, price: 50 },
         { name: "Dosa", quantity: 1, price: 60 },
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
       preparationTime: 20,
     },
     {
-      id: "MCE-1002",
+      id: "MEC-1002",
       items: [{ name: "Chicken Biryani", quantity: 1, price: 150 }],
       customer: "Jane Smith",
       phone: "9876543211",
@@ -63,7 +63,7 @@ export default function AdminDashboard() {
       preparationTime: 30,
     },
     {
-      id: "MCE-1003",
+      id: "MEC-1003",
       items: [{ name: "Pongal", quantity: 3, price: 55 }],
       customer: "Alex Kumar",
       phone: "9876543212",
@@ -74,7 +74,7 @@ export default function AdminDashboard() {
       preparationTime: 25,
     },
     {
-      id: "MCE-1004",
+      id: "MEC-1004",
       items: [
         { name: "Masala Dosa", quantity: 2, price: 80 },
         { name: "Sambhar", quantity: 1, price: 20 },
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
       preparationTime: 35,
     },
     {
-      id: "MCE-1005",
+      id: "MEC-1005",
       items: [{ name: "Veg Biryani", quantity: 1, price: 120 }],
       customer: "Ravi Patel",
       phone: "9876543214",
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
         <Card className="max-w-md w-full p-8 shadow-lg">
           <h1 className="text-3xl font-bold mb-2 text-center text-primary">Admin Portal</h1>
-          <p className="text-center text-muted-foreground text-sm mb-6">MCE Canteen Management</p>
+          <p className="text-center text-muted-foreground text-sm mb-6">MEC Canteen Management</p>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">Admin Password</label>

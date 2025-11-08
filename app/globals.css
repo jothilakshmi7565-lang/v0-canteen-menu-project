@@ -4,7 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated color theme for MCE Canteen - warm orange and natural tones */
+  /* Updated color theme comment from MCE to MEC */
+  /* Updated color theme for MEC Canteen - warm orange and natural tones */
   --background: oklch(0.98 0.01 70);
   --foreground: oklch(0.2 0.05 30);
   --card: oklch(1 0 0);
