@@ -25,6 +25,11 @@ export default function MenuPage() {
       return
     }
     setUser(JSON.parse(userData))
+
+    const savedNotifications = localStorage.getItem("notifications")
+    if (savedNotifications) {
+      setNotifications(JSON.parse(savedNotifications))
+    }
   }, [router])
 
   const menuItems = {
@@ -329,90 +334,113 @@ export default function MenuPage() {
   const handleLogout = () => {
     localStorage.removeItem("user")
     localStorage.removeItem("token")
+    localStorage.removeItem("userType")
     router.push("/")
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground sticky top-0 z-50 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">MEC Canteen</h1>
-            <p className="text-sm opacity-90">Welcome, {user?.username}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <button
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 rounded-lg hover:bg-primary-foreground/20 transition"
-              >
-                <Bell size={24} />
-                {notifications.length > 0 && (
-                  <span className="absolute top-0 right-0 bg-destructive text-destructive-foreground rounded-full w-5 h-5 text-xs flex items-center justify-center">
-                    {notifications.length}
-                  </span>
-                )}
-              </button>
-              {showNotifications && notifications.length > 0 && (
-                <div className="absolute right-0 mt-2 w-72 bg-white text-foreground rounded-lg shadow-lg p-4 max-h-64 overflow-y-auto">
-                  <h3 className="font-bold mb-3">Recent Notifications</h3>
-                  <div className="space-y-2">
-                    {notifications.map((notif) => (
-                      <div
-                        key={notif.id}
-                        className={`p-2 rounded text-sm ${
-                          notif.type === "chef"
-                            ? "bg-blue-100 text-blue-800 border-l-4 border-blue-500"
-                            : "bg-green-100 text-green-800 border-l-4 border-green-500"
-                        }`}
-                      >
-                        {notif.type === "chef" ? "👨‍🍳 Chef:" : "✅ Ready:"} {notif.message}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-            <Button onClick={handleLogout} className="bg-primary-foreground text-primary hover:bg-opacity-90">
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-green-50 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-200 to-transparent rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-green-200 to-transparent rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-yellow-200 to-transparent rounded-full blur-3xl opacity-30"></div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <div className="flex gap-2 mb-8 flex-wrap">
-              {(["veg", "nonveg", "snacks", "desserts"] as const).map((cat) => (
-                <Button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={`px-6 py-3 rounded-lg font-semibold transition capitalize ${
-                    category === cat
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-foreground hover:bg-muted/80"
-                  }`}
+      <div className="relative z-10">
+        <header className="bg-gradient-to-r from-orange-600 to-red-600 text-white sticky top-0 z-50 shadow-2xl">
+          <div className="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold flex items-center gap-2">🍲 MEC Canteen Menu</h1>
+              <p className="text-orange-100 text-sm">Welcome, {user?.username || "Guest"}</p>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <button
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative p-2 hover:bg-white/20 rounded-lg transition"
                 >
-                  {cat === "nonveg" ? "Non-Veg" : cat.charAt(0).toUpperCase() + cat.slice(1)}
-                </Button>
-              ))}
-            </div>
+                  <Bell size={24} />
+                  {notifications.length > 0 && (
+                    <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse">
+                      {notifications.length}
+                    </span>
+                  )}
+                </button>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {menuItems[category].map((item) => (
-                <MenuItem
-                  key={item.id}
-                  item={item}
-                  onAddToCart={() => handleAddToCart(item)}
-                  isInCart={cart.some((c) => c.id === item.id)}
-                />
-              ))}
+                {showNotifications && notifications.length > 0 && (
+                  <div className="absolute right-0 mt-2 w-80 bg-white text-foreground rounded-lg shadow-2xl z-20 p-4 border-l-4 border-orange-500">
+                    <h3 className="font-bold mb-3 text-orange-600">Notifications</h3>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {notifications.map((notif) => (
+                        <div
+                          key={notif.id}
+                          className="p-3 bg-gradient-to-r from-orange-50 to-yellow-50 rounded-lg text-sm border-l-4 border-yellow-400"
+                        >
+                          <p className="font-semibold text-gray-800">{notif.message}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {notif.type === "chef" ? "👨‍🍳 Chef" : "✓"} - {notif.type}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <Button
+                onClick={() => router.push("/feedback")}
+                className="bg-white text-orange-600 hover:bg-orange-50 font-bold rounded-lg"
+              >
+                ⭐ Feedback
+              </Button>
+              <Button onClick={handleLogout} className="bg-white/20 hover:bg-white/30 text-white font-bold">
+                Logout
+              </Button>
             </div>
           </div>
+        </header>
 
-          <div className="lg:col-span-1">
-            <CartSummary cart={cart} onRemoveItem={handleRemoveFromCart} onCheckout={handleCheckout} />
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Category Tabs */}
+          <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
+            {[
+              { id: "veg", label: "🥗 Vegetarian", color: "from-green-400 to-green-600" },
+              { id: "nonveg", label: "🍗 Non-Vegetarian", color: "from-red-400 to-red-600" },
+              { id: "snacks", label: "🌶️ Snacks & More", color: "from-yellow-400 to-yellow-600" },
+              { id: "desserts", label: "🍨 Desserts", color: "from-pink-400 to-pink-600" },
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setCategory(cat.id as any)}
+                className={`px-6 py-3 rounded-lg font-bold whitespace-nowrap transition transform hover:scale-105 ${
+                  category === cat.id
+                    ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
+                    : "bg-white/80 text-gray-800 hover:bg-white shadow-md"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Menu Items Grid */}
+            <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {menuItems[category].map((item) => (
+                  <MenuItem
+                    key={item.id}
+                    item={item}
+                    onAddToCart={() => handleAddToCart(item)}
+                    isInCart={cart.some((c) => c.id === item.id)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Cart Summary */}
+            <div className="lg:col-span-1">
+              <CartSummary cart={cart} onRemoveItem={handleRemoveFromCart} onCheckout={handleCheckout} />
+            </div>
           </div>
         </div>
       </div>
