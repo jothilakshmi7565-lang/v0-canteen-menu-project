@@ -17,8 +17,10 @@ export default function MenuPage() {
 
   useEffect(() => {
     const userData = localStorage.getItem("user")
+    const userType = localStorage.getItem("userType")
     const token = localStorage.getItem("token")
-    if (!userData || !token) {
+
+    if (!userData || !token || userType !== "user") {
       router.push("/")
       return
     }
@@ -239,7 +241,7 @@ export default function MenuPage() {
         price: 40,
         description: "Crispy sweet spiral",
         color: "bg-gradient-to-br from-yellow-400 to-orange-400",
-        image: "/placeholder.svg?height=200&width=200",
+        image: "/jalebi-crispy-sweet-spiral.jpg",
       },
       {
         id: "27",
@@ -247,7 +249,7 @@ export default function MenuPage() {
         price: 45,
         description: "Creamy rice pudding",
         color: "bg-gradient-to-br from-yellow-200 to-orange-200",
-        image: "/placeholder.svg?height=200&width=200",
+        image: "/kheer-creamy-rice-pudding.jpg",
       },
       {
         id: "28",
@@ -255,39 +257,39 @@ export default function MenuPage() {
         price: 55,
         description: "Sweet vermicelli pudding",
         color: "bg-gradient-to-br from-orange-200 to-yellow-200",
-        image: "/placeholder.svg?height=200&width=200",
+        image: "/payasam-sweet-vermicelli.jpg",
       },
       {
-        id: "29",
-        name: "Mango Juice",
-        price: 35,
-        description: "Fresh mango juice",
-        color: "bg-gradient-to-br from-yellow-400 to-orange-500",
-        image: "/placeholder.svg?height=200&width=200",
+        id: "33",
+        name: "Vanilla Ice Cream",
+        price: 45,
+        description: "Creamy vanilla ice cream",
+        color: "bg-gradient-to-br from-white to-yellow-100",
+        image: "/vanilla-ice-cream-creamy.jpg",
       },
       {
-        id: "30",
-        name: "Orange Juice",
-        price: 30,
-        description: "Fresh orange juice",
-        color: "bg-gradient-to-br from-orange-400 to-orange-500",
-        image: "/placeholder.svg?height=200&width=200",
+        id: "34",
+        name: "Chocolate Ice Cream",
+        price: 50,
+        description: "Rich chocolate ice cream",
+        color: "bg-gradient-to-br from-amber-700 to-amber-600",
+        image: "/chocolate-ice-cream-rich.jpg",
       },
       {
-        id: "31",
-        name: "Coconut Water",
-        price: 25,
-        description: "Fresh coconut water",
-        color: "bg-gradient-to-br from-cyan-200 to-blue-200",
-        image: "/placeholder.svg?height=200&width=200",
+        id: "35",
+        name: "Mango Ice Cream",
+        price: 55,
+        description: "Fresh mango ice cream",
+        color: "bg-gradient-to-br from-yellow-400 to-orange-300",
+        image: "/mango-ice-cream-fresh.jpg",
       },
       {
-        id: "32",
-        name: "Lassi",
-        price: 40,
-        description: "Yogurt-based drink",
-        color: "bg-gradient-to-br from-yellow-100 to-orange-100",
-        image: "/placeholder.svg?height=200&width=200",
+        id: "36",
+        name: "Strawberry Ice Cream",
+        price: 50,
+        description: "Sweet strawberry ice cream",
+        color: "bg-gradient-to-br from-pink-300 to-red-300",
+        image: "/strawberry-ice-cream-sweet.jpg",
       },
     ],
   }
