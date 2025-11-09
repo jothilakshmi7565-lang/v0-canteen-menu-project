@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card"
 import { Eye, EyeOff } from "lucide-react"
 
 interface LoginFormProps {
-  userType: "user" | "chef"
+  userType: "user" | "chef" | "admin"
 }
 
 export function LoginForm({ userType }: LoginFormProps) {
@@ -26,6 +26,21 @@ export function LoginForm({ userType }: LoginFormProps) {
     setLoading(true)
 
     try {
+      // Special handling for admin login
+      if (userType === "admin") {
+        // For admin, we check a specific password
+        if (username === "admin" && password === "admin123") {
+          localStorage.setItem("user", JSON.stringify({ username: "admin", id: "admin" }))
+          localStorage.setItem("token", "admin-token")
+          localStorage.setItem("userType", "admin")
+          router.push("/admin")
+          return
+        } else {
+          throw new Error("Invalid admin credentials")
+        }
+      }
+
+      // Regular user/chef login
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,6 +57,7 @@ export function LoginForm({ userType }: LoginFormProps) {
       localStorage.setItem("token", data.token)
       localStorage.setItem("userType", userType)
 
+      // Redirect based on user type
       if (userType === "chef") {
         router.push("/chef-dashboard")
       } else {
@@ -63,7 +79,7 @@ export function LoginForm({ userType }: LoginFormProps) {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            placeholder={userType === "admin" ? "Enter admin username" : "Enter your username"}
             className="w-full px-4 py-3 rounded-lg border-2 border-orange-200 bg-white text-foreground placeholder-muted-foreground focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
             required
           />
@@ -76,7 +92,7 @@ export function LoginForm({ userType }: LoginFormProps) {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder={userType === "admin" ? "Enter admin password" : "Enter your password"}
               className="w-full px-4 py-3 rounded-lg border-2 border-orange-200 bg-white text-foreground placeholder-muted-foreground focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
               required
             />
@@ -108,14 +124,17 @@ export function LoginForm({ userType }: LoginFormProps) {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-105"
+          className="w-full bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-105"
         >
-          {loading ? "Logging in..." : `Login as ${userType === "chef" ? "Chef" : "Customer"}`}
+          {loading ? "Logging in..." : `Login as ${userType === "chef" ? "Canteen Staff" : userType === "admin" ? "Admin" : "Customer"}`}
         </Button>
 
         <p className="text-xs text-center text-muted-foreground mt-3">
-          Demo: <span className="font-semibold">user123/pass123</span> or{" "}
+          Demo: <span className="font-semibold">testuser/password123</span> or{" "}
           <span className="font-semibold">chef123/pass123</span>
+          {userType === "admin" && (
+            <> or <span className="font-semibold">admin/admin123</span></>
+          )}
         </p>
       </form>
     </Card>

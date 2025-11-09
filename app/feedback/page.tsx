@@ -89,11 +89,11 @@ export default function FeedbackPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200 to-transparent rounded-full blur-3xl opacity-40"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-purple-200 to-transparent rounded-full blur-3xl opacity-40"></div>
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-linear-to-br from-blue-200 to-transparent rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-linear-to-tr from-purple-200 to-transparent rounded-full blur-3xl opacity-40"></div>
 
-      <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white sticky top-0 z-50 shadow-lg">
+      <header className="bg-linear-to-r from-blue-600 to-purple-600 text-white sticky top-0 z-50 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold">⭐ MEC Canteen - Feedback</h1>
@@ -118,13 +118,13 @@ export default function FeedbackPage() {
           {/* Feedback Form */}
           <div className="lg:col-span-2">
             <Card className="p-8 bg-white/95 backdrop-blur border-0 shadow-2xl">
-              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Rate Your Experience
               </h2>
               <p className="text-muted-foreground mb-8 font-medium">Help us serve you better</p>
 
               {submitted && (
-                <div className="bg-gradient-to-r from-green-100 to-emerald-100 border-l-4 border-green-500 text-green-700 px-6 py-4 rounded-lg mb-6 animate-pulse font-semibold flex items-center gap-2">
+                <div className="bg-linear-to-r from-green-100 to-emerald-100 border-l-4 border-green-500 text-green-700 px-6 py-4 rounded-lg mb-6 animate-pulse font-semibold flex items-center gap-2">
                   <span className="text-2xl">✓</span> Thank you for your valuable feedback!
                 </div>
               )}
@@ -185,7 +185,7 @@ export default function FeedbackPage() {
 
               <Button
                 onClick={handleSubmitFeedback}
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 rounded-lg transition transform hover:scale-105 text-lg"
+                className="w-full bg-linear-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 rounded-lg transition transform hover:scale-105 text-lg"
               >
                 Submit Feedback ✓
               </Button>
@@ -195,7 +195,7 @@ export default function FeedbackPage() {
           {/* Feedback Stats and Reviews */}
           <div className="space-y-6">
             <Card className="p-6 bg-white/95 backdrop-blur border-0 shadow-2xl">
-              <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold mb-6 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Customer Reviews
               </h3>
 
@@ -228,7 +228,7 @@ export default function FeedbackPage() {
                         <span className="text-sm font-bold text-gray-600 w-12">{stars}★</span>
                         <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-yellow-400 to-yellow-500"
+                            className="h-full bg-linear-to-r from-yellow-400 to-yellow-500"
                             style={{
                               width: `${feedbackList.length > 0 ? (ratingCounts[stars as keyof typeof ratingCounts] / feedbackList.length) * 100 : 0}%`,
                             }}
@@ -257,7 +257,7 @@ export default function FeedbackPage() {
                   {feedbackList.map((feedback) => (
                     <Card
                       key={feedback.id}
-                      className="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 border-l-4 border-yellow-400 hover:shadow-md transition"
+                      className="p-4 bg-linear-to-br from-yellow-50 to-amber-50 border-l-4 border-yellow-400 hover:shadow-md transition"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div>

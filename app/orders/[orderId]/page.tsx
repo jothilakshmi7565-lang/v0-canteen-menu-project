@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { useNotifications } from "@/lib/notification-context"
 
 type OrderStatus = "confirmed" | "preparing" | "ready" | "out_for_delivery" | "delivered"
 
@@ -11,9 +12,9 @@ export default function OrderTrackingPage() {
   const router = useRouter()
   const params = useParams()
   const orderId = params.orderId as string
+  const { addNotification } = useNotifications()
 
   const [status, setStatus] = useState<OrderStatus>("confirmed")
-  const [notifications, setNotifications] = useState<Array<{ id: string; message: string; time: string }>>([])
   const [estimatedTime, setEstimatedTime] = useState(25)
 
   useEffect(() => {
@@ -34,21 +35,15 @@ export default function OrderTrackingPage() {
           delivered: "Your order has been delivered. Thank you for ordering!",
         }
 
-        setNotifications((prev) => [
-          ...prev,
-          {
-            id: `notif-${Date.now()}`,
-            message: statusMessages[newStatus],
-            time: new Date().toLocaleTimeString(),
-          },
-        ])
+        // Add notification using the context
+        addNotification(statusMessages[newStatus], "order")
 
         currentIndex++
       }
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [addNotification])
 
   const statusSteps = [
     { status: "confirmed", label: "Confirmed", time: "Now" },
@@ -126,24 +121,7 @@ export default function OrderTrackingPage() {
         {/* Notifications */}
         <Card className="p-6">
           <h3 className="text-lg font-bold mb-4 text-foreground">Order Updates</h3>
-          {notifications.length === 0 ? (
-            <p className="text-muted-foreground text-center py-4">Waiting for updates...</p>
-          ) : (
-            <div className="space-y-3">
-              {notifications.map((notif) => (
-                <div
-                  key={notif.id}
-                  className="flex items-start gap-3 p-3 bg-muted rounded-lg border-l-4 border-primary"
-                >
-                  <span className="text-primary mt-1">●</span>
-                  <div className="flex-1">
-                    <p className="font-semibold text-foreground">{notif.message}</p>
-                    <p className="text-sm text-muted-foreground">{notif.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <p className="text-muted-foreground text-center py-4">Check the notification panel in the top right corner for real-time updates!</p>
         </Card>
       </div>
     </div>

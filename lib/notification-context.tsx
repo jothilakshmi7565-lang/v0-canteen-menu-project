@@ -23,9 +23,37 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const [notifications, setNotifications] = useState<Notification[]>([])
 
   useEffect(() => {
-    const savedNotifications = localStorage.getItem("notifications")
-    if (savedNotifications) {
-      setNotifications(JSON.parse(savedNotifications))
+    // Load notifications based on user type
+    const userType = localStorage.getItem("userType")
+    
+    if (userType === "chef") {
+      // For chefs, load chef-specific notifications
+      const savedNotifications = localStorage.getItem("chefNotifications")
+      if (savedNotifications) {
+        try {
+          const parsed = JSON.parse(savedNotifications)
+          // Convert to standard notification format
+          const formatted = parsed.map((n: any) => ({
+            id: n.id,
+            message: n.message,
+            type: "info" as const,
+            time: n.time
+          }))
+          setNotifications(formatted)
+        } catch (e) {
+          console.error("Error parsing chef notifications", e)
+        }
+      }
+    } else {
+      // For customers, load regular notifications
+      const savedNotifications = localStorage.getItem("notifications")
+      if (savedNotifications) {
+        try {
+          setNotifications(JSON.parse(savedNotifications))
+        } catch (e) {
+          console.error("Error parsing notifications", e)
+        }
+      }
     }
   }, [])
 
@@ -38,7 +66,18 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     }
     setNotifications((prev) => {
       const updated = [newNotification, ...prev]
-      localStorage.setItem("notifications", JSON.stringify(updated))
+      
+      // Save to appropriate storage based on user type
+      const userType = localStorage.getItem("userType")
+      if (userType === "chef") {
+        // For chefs, we'll add to chefNotifications but also keep in context
+        const chefNotifications = JSON.parse(localStorage.getItem("chefNotifications") || "[]")
+        const updatedChefNotifications = [newNotification, ...chefNotifications]
+        localStorage.setItem("chefNotifications", JSON.stringify(updatedChefNotifications))
+      } else {
+        localStorage.setItem("notifications", JSON.stringify(updated))
+      }
+      
       return updated
     })
   }
@@ -46,14 +85,31 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
   const removeNotification = (id: string) => {
     setNotifications((prev) => {
       const updated = prev.filter((n) => n.id !== id)
-      localStorage.setItem("notifications", JSON.stringify(updated))
+      
+      // Update appropriate storage based on user type
+      const userType = localStorage.getItem("userType")
+      if (userType === "chef") {
+        const chefNotifications = JSON.parse(localStorage.getItem("chefNotifications") || "[]")
+        const updatedChefNotifications = chefNotifications.filter((n: any) => n.id !== id)
+        localStorage.setItem("chefNotifications", JSON.stringify(updatedChefNotifications))
+      } else {
+        localStorage.setItem("notifications", JSON.stringify(updated))
+      }
+      
       return updated
     })
   }
 
   const clearNotifications = () => {
     setNotifications([])
-    localStorage.removeItem("notifications")
+    
+    // Clear appropriate storage based on user type
+    const userType = localStorage.getItem("userType")
+    if (userType === "chef") {
+      localStorage.removeItem("chefNotifications")
+    } else {
+      localStorage.removeItem("notifications")
+    }
   }
 
   return (

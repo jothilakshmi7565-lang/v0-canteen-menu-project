@@ -163,7 +163,7 @@ export default function AdminDashboard() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
+      <div className="min-h-screen bg-linear-to-br from-background to-muted flex items-center justify-center p-4">
         <Card className="max-w-md w-full p-8 shadow-lg">
           <h1 className="text-3xl font-bold mb-2 text-center text-primary">Admin Portal</h1>
           <p className="text-center text-muted-foreground text-sm mb-6">MEC Canteen Management</p>
@@ -185,9 +185,7 @@ export default function AdminDashboard() {
               Login to Dashboard
             </Button>
           </form>
-          <p className="text-xs text-muted-foreground text-center mt-4 p-3 bg-muted rounded">
-            Demo: <span className="font-mono">admin123</span>
-          </p>
+          
         </Card>
       </div>
     )
@@ -218,27 +216,27 @@ export default function AdminDashboard() {
         {/* Quick Stats */}
         {showStats && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
-            <Card className="p-6 text-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
+            <Card className="p-6 text-center bg-linear-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
               <p className="text-muted-foreground text-sm font-medium mb-1">Total Orders</p>
               <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">{stats.totalOrders}</p>
             </Card>
-            <Card className="p-6 text-center bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-950 dark:to-yellow-900">
+            <Card className="p-6 text-center bg-linear-to-br from-yellow-50 to-yellow-100 dark:from-yellow-950 dark:to-yellow-900">
               <p className="text-muted-foreground text-sm font-medium mb-1">Pending</p>
               <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{stats.pendingOrders}</p>
             </Card>
-            <Card className="p-6 text-center bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
+            <Card className="p-6 text-center bg-linear-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
               <p className="text-muted-foreground text-sm font-medium mb-1">In Progress</p>
               <p className="text-3xl font-bold text-purple-600 dark:text-purple-400">{stats.inProgress}</p>
             </Card>
-            <Card className="p-6 text-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">
+            <Card className="p-6 text-center bg-linear-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">
               <p className="text-muted-foreground text-sm font-medium mb-1">Delivered</p>
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">{stats.delivered}</p>
             </Card>
-            <Card className="p-6 text-center bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900">
+            <Card className="p-6 text-center bg-linear-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900">
               <p className="text-muted-foreground text-sm font-medium mb-1">Total Revenue</p>
               <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">₹{stats.totalRevenue}</p>
             </Card>
-            <Card className="p-6 text-center bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-950 dark:to-indigo-900">
+            <Card className="p-6 text-center bg-linear-to-br from-indigo-50 to-indigo-100 dark:from-indigo-950 dark:to-indigo-900">
               <p className="text-muted-foreground text-sm font-medium mb-1">Avg Order</p>
               <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">₹{stats.avgOrderValue}</p>
             </Card>

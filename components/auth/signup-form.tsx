@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card"
 import { Eye, EyeOff } from "lucide-react"
 
 interface SignupFormProps {
-  userType: "user" | "chef"
+  userType: "user" | "chef" | "admin"
 }
 
 export function SignupForm({ userType }: SignupFormProps) {
@@ -32,6 +32,12 @@ export function SignupForm({ userType }: SignupFormProps) {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+
+    // Admins cannot signup, they are predefined
+    if (userType === "admin") {
+      setError("Admin accounts cannot be created through signup")
+      return
+    }
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match")
@@ -71,6 +77,25 @@ export function SignupForm({ userType }: SignupFormProps) {
     } finally {
       setLoading(false)
     }
+  }
+
+  // Don't show signup form for admin
+  if (userType === "admin") {
+    return (
+      <Card className="p-6">
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">
+            Admin accounts are predefined and cannot be created through signup.
+          </p>
+          <Button 
+            onClick={() => router.push("/")} 
+            className="mt-4"
+          >
+            Back to Login
+          </Button>
+        </div>
+      </Card>
+    )
   }
 
   return (
@@ -140,7 +165,7 @@ export function SignupForm({ userType }: SignupFormProps) {
           disabled={loading}
           className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2 rounded-lg transition"
         >
-          {loading ? "Creating account..." : `Sign up as ${userType === "chef" ? "Chef" : "Customer"}`}
+          {loading ? "Creating account..." : `Sign up as ${userType === "chef" ? "Canteen Staff" : "Customer"}`}
         </Button>
       </form>
     </Card>

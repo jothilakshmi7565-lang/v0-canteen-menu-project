@@ -5,21 +5,57 @@ import { useRouter, useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 
+type PaymentMethod = "upi" | "phonepe" | "googlepay"
+
+interface UpiMethod {
+  name: string
+  upiId: string
+}
+
+interface PhonePeMethod {
+  name: string
+  phone: string
+}
+
+interface GooglePayMethod {
+  name: string
+  email: string
+}
+
+type MethodDetails = {
+  upi: UpiMethod
+  phonepe: PhonePeMethod
+  googlepay: GooglePayMethod
+}
+
 export default function PaymentPage() {
   const router = useRouter()
   const params = useParams()
-  const method = params.method as string
+  const method = params.method as PaymentMethod
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState<"pending" | "processing" | "success" | "failed">("pending")
   const [orderId, setOrderId] = useState("")
 
-  const methodDetails = {
+  const methodDetails: MethodDetails = {
     upi: { name: "UPI", upiId: "meccanteen@upi" },
     phonepe: { name: "PhonePe", phone: "9000000000" },
     googlepay: { name: "Google Pay", email: "pay@meccanteen.com" },
   }
 
-  const current = methodDetails[method as keyof typeof methodDetails] || methodDetails.upi
+  const current = methodDetails[method] || methodDetails.upi
+
+  const getPaymentInfo = () => {
+    switch (method) {
+      case "upi":
+        return `Pay to: ${(current as UpiMethod).upiId}`
+      case "phonepe":
+        return `PhonePe: ${(current as PhonePeMethod).phone}`
+      case "googlepay":
+        return `Google Pay: ${(current as GooglePayMethod).email}`
+      default:
+        return ""
+    }
+  }
 
   const handlePayment = async () => {
     setLoading(true)
@@ -66,9 +102,7 @@ export default function PaymentPage() {
             <div className="bg-muted p-4 rounded-lg mb-6 text-center">
               <p className="text-foreground font-semibold mb-2">{current.name} Payment</p>
               <p className="text-sm text-muted-foreground mb-4">
-                {method === "upi" && `Pay to: ${current.upiId}`}
-                {method === "phonepe" && `PhonePe: ${current.phone}`}
-                {method === "googlepay" && `Google Pay: ${current.email}`}
+                {getPaymentInfo()}
               </p>
               <p className="text-2xl font-bold text-primary">
                 ₹
