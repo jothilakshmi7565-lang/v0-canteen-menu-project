@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation"
 import { MenuItem } from "@/components/menu/menu-item"
 import { CartSummary } from "@/components/cart/cart-summary"
 import { Button } from "@/components/ui/button"
+import { Bell } from "lucide-react"
 
 export default function MenuPage() {
   const router = useRouter()
-  const [category, setCategory] = useState<"veg" | "nonveg">("veg")
+  const [category, setCategory] = useState<"veg" | "nonveg" | "snacks" | "desserts">("veg")
   const [cart, setCart] = useState<Array<{ id: string; name: string; price: number; quantity: number }>>([])
   const [user, setUser] = useState<{ username: string } | null>(null)
+  const [notifications, setNotifications] = useState<Array<{ id: string; message: string; type: "chef" | "ready" }>>([])
+  const [showNotifications, setShowNotifications] = useState(false)
 
   useEffect(() => {
     const userData = localStorage.getItem("user")
@@ -30,7 +33,7 @@ export default function MenuPage() {
         price: 50,
         description: "Steamed rice cakes with sambhar",
         color: "bg-gradient-to-br from-yellow-100 to-orange-100",
-        image: "/idli-south-indian-steamed-rice-cakes.jpg",
+        image: "/idli-steamed-rice-cakes-south-indian.jpg",
       },
       {
         id: "2",
@@ -62,7 +65,7 @@ export default function MenuPage() {
         price: 40,
         description: "Soft fried lentil donuts",
         color: "bg-gradient-to-br from-orange-300 to-amber-200",
-        image: "/medu-vada-fried-lentil.jpg",
+        image: "/medu-vada-fried-lentil-donuts.jpg",
       },
       {
         id: "8",
@@ -70,7 +73,7 @@ export default function MenuPage() {
         price: 45,
         description: "Rava fried crispy snack",
         color: "bg-gradient-to-br from-yellow-200 to-amber-200",
-        image: "/chikhalali-crispy-snack.jpg",
+        image: "/chikhalali-rava-crispy-snack.jpg",
       },
       {
         id: "9",
@@ -78,7 +81,7 @@ export default function MenuPage() {
         price: 100,
         description: "Fragrant rice with mixed vegetables",
         color: "bg-gradient-to-br from-green-200 to-emerald-300",
-        image: "/vegetable-biryani-rice.jpg",
+        image: "/vegetable-biryani-fragrant-rice.jpg",
       },
       {
         id: "10",
@@ -128,7 +131,7 @@ export default function MenuPage() {
         price: 130,
         description: "Spicy fried fish with coconut",
         color: "bg-gradient-to-br from-yellow-400 to-orange-300",
-        image: "/fish-fry-spicy.jpg",
+        image: "/fish-fry-spicy-coconut.jpg",
       },
       {
         id: "14",
@@ -144,7 +147,7 @@ export default function MenuPage() {
         price: 80,
         description: "Rice with boiled eggs",
         color: "bg-gradient-to-br from-yellow-300 to-orange-300",
-        image: "/egg-biryani-rice.jpg",
+        image: "/egg-biryani-rice-eggs.jpg",
       },
       {
         id: "16",
@@ -152,12 +155,144 @@ export default function MenuPage() {
         price: 100,
         description: "Rice with spicy chicken curry",
         color: "bg-gradient-to-br from-red-200 to-orange-400",
+        image: "/chicken-curry-rice.jpg",
+      },
+    ],
+    snacks: [
+      {
+        id: "17",
+        name: "Samosa",
+        price: 25,
+        description: "Crispy potato and pea pastry",
+        color: "bg-gradient-to-br from-amber-300 to-yellow-400",
+        image: "/samosa-crispy-pastry-golden.jpg",
+      },
+      {
+        id: "18",
+        name: "Puff",
+        price: 20,
+        description: "Crispy puff pastry snack",
+        color: "bg-gradient-to-br from-orange-300 to-amber-300",
+        image: "/puff-crispy-pastry-snack.jpg",
+      },
+      {
+        id: "19",
+        name: "Pakora",
+        price: 30,
+        description: "Crispy vegetable fritters",
+        color: "bg-gradient-to-br from-yellow-400 to-orange-300",
+        image: "/pakora-crispy-vegetable-fritters.jpg",
+      },
+      {
+        id: "20",
+        name: "Murukku",
+        price: 35,
+        description: "Spiral shaped savory snack",
+        color: "bg-gradient-to-br from-yellow-300 to-amber-300",
+        image: "/murukku-spiral-savory-snack.jpg",
+      },
+      {
+        id: "21",
+        name: "Mixture",
+        price: 40,
+        description: "Spicy mixed savory snack",
+        color: "bg-gradient-to-br from-orange-300 to-yellow-300",
+        image: "/mixture-spicy-savory-snack.jpg",
+      },
+      {
+        id: "22",
+        name: "Chikki",
+        price: 30,
+        description: "Brittle peanut candy",
+        color: "bg-gradient-to-br from-yellow-400 to-yellow-300",
+        image: "/chikki-peanut-brittle-candy.jpg",
+      },
+      {
+        id: "23",
+        name: "Chips",
+        price: 20,
+        description: "Crispy potato chips",
+        color: "bg-gradient-to-br from-yellow-300 to-orange-300",
+        image: "/chips-crispy-potato.jpg",
+      },
+      {
+        id: "24",
+        name: "Pickle",
+        price: 15,
+        description: "Traditional Indian pickle",
+        color: "bg-gradient-to-br from-green-400 to-yellow-400",
+        image: "/pickle-traditional-indian.jpg",
+      },
+    ],
+    desserts: [
+      {
+        id: "25",
+        name: "Gulab Jamun",
+        price: 50,
+        description: "Sweet milk solids in sugar syrup",
+        color: "bg-gradient-to-br from-red-300 to-pink-300",
+        image: "/gulab-jamun-sweet-milk-syrup.jpg",
+      },
+      {
+        id: "26",
+        name: "Jalebi",
+        price: 40,
+        description: "Crispy sweet spiral",
+        color: "bg-gradient-to-br from-yellow-400 to-orange-400",
+        image: "/placeholder.svg?height=200&width=200",
+      },
+      {
+        id: "27",
+        name: "Kheer",
+        price: 45,
+        description: "Creamy rice pudding",
+        color: "bg-gradient-to-br from-yellow-200 to-orange-200",
+        image: "/placeholder.svg?height=200&width=200",
+      },
+      {
+        id: "28",
+        name: "Payasam",
+        price: 55,
+        description: "Sweet vermicelli pudding",
+        color: "bg-gradient-to-br from-orange-200 to-yellow-200",
+        image: "/placeholder.svg?height=200&width=200",
+      },
+      {
+        id: "29",
+        name: "Mango Juice",
+        price: 35,
+        description: "Fresh mango juice",
+        color: "bg-gradient-to-br from-yellow-400 to-orange-500",
+        image: "/placeholder.svg?height=200&width=200",
+      },
+      {
+        id: "30",
+        name: "Orange Juice",
+        price: 30,
+        description: "Fresh orange juice",
+        color: "bg-gradient-to-br from-orange-400 to-orange-500",
+        image: "/placeholder.svg?height=200&width=200",
+      },
+      {
+        id: "31",
+        name: "Coconut Water",
+        price: 25,
+        description: "Fresh coconut water",
+        color: "bg-gradient-to-br from-cyan-200 to-blue-200",
+        image: "/placeholder.svg?height=200&width=200",
+      },
+      {
+        id: "32",
+        name: "Lassi",
+        price: 40,
+        description: "Yogurt-based drink",
+        color: "bg-gradient-to-br from-yellow-100 to-orange-100",
         image: "/placeholder.svg?height=200&width=200",
       },
     ],
   }
 
-  const handleAddToCart = (item: (typeof menuItems.veg)[0]) => {
+  const handleAddToCart = (item: any) => {
     setCart((prev) => {
       const existing = prev.find((c) => c.id === item.id)
       if (existing) {
@@ -165,12 +300,28 @@ export default function MenuPage() {
       }
       return [...prev, { ...item, quantity: 1 }]
     })
+    const chefNotification = {
+      id: Date.now().toString(),
+      message: `New order: ${item.name} from ${user?.username}`,
+      type: "chef" as const,
+    }
+    setNotifications((prev) => [chefNotification, ...prev])
   }
 
   const handleRemoveFromCart = (itemId: string) => {
     setCart((prev) =>
       prev.map((c) => (c.id === itemId ? { ...c, quantity: c.quantity - 1 } : c)).filter((c) => c.quantity > 0),
     )
+  }
+
+  const handleCheckout = () => {
+    const readyNotification = {
+      id: Date.now().toString(),
+      message: "Your order has been confirmed! Chef is preparing your meal.",
+      type: "ready" as const,
+    }
+    setNotifications((prev) => [readyNotification, ...prev])
+    router.push("/checkout")
   }
 
   const handleLogout = () => {
@@ -181,48 +332,71 @@ export default function MenuPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="bg-primary text-primary-foreground sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">MEC Canteen</h1>
             <p className="text-sm opacity-90">Welcome, {user?.username}</p>
           </div>
-          <Button onClick={handleLogout} className="bg-primary-foreground text-primary hover:bg-opacity-90">
-            Logout
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <button
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="relative p-2 rounded-lg hover:bg-primary-foreground/20 transition"
+              >
+                <Bell size={24} />
+                {notifications.length > 0 && (
+                  <span className="absolute top-0 right-0 bg-destructive text-destructive-foreground rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                    {notifications.length}
+                  </span>
+                )}
+              </button>
+              {showNotifications && notifications.length > 0 && (
+                <div className="absolute right-0 mt-2 w-72 bg-white text-foreground rounded-lg shadow-lg p-4 max-h-64 overflow-y-auto">
+                  <h3 className="font-bold mb-3">Recent Notifications</h3>
+                  <div className="space-y-2">
+                    {notifications.map((notif) => (
+                      <div
+                        key={notif.id}
+                        className={`p-2 rounded text-sm ${
+                          notif.type === "chef"
+                            ? "bg-blue-100 text-blue-800 border-l-4 border-blue-500"
+                            : "bg-green-100 text-green-800 border-l-4 border-green-500"
+                        }`}
+                      >
+                        {notif.type === "chef" ? "👨‍🍳 Chef:" : "✅ Ready:"} {notif.message}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <Button onClick={handleLogout} className="bg-primary-foreground text-primary hover:bg-opacity-90">
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Menu Section */}
           <div className="lg:col-span-2">
-            {/* Category Filter */}
-            <div className="flex gap-4 mb-8">
-              <Button
-                onClick={() => setCategory("veg")}
-                className={`px-6 py-3 rounded-lg font-semibold transition ${
-                  category === "veg"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-foreground hover:bg-muted/80"
-                }`}
-              >
-                Vegetarian
-              </Button>
-              <Button
-                onClick={() => setCategory("nonveg")}
-                className={`px-6 py-3 rounded-lg font-semibold transition ${
-                  category === "nonveg"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-foreground hover:bg-muted/80"
-                }`}
-              >
-                Non-Vegetarian
-              </Button>
+            <div className="flex gap-2 mb-8 flex-wrap">
+              {(["veg", "nonveg", "snacks", "desserts"] as const).map((cat) => (
+                <Button
+                  key={cat}
+                  onClick={() => setCategory(cat)}
+                  className={`px-6 py-3 rounded-lg font-semibold transition capitalize ${
+                    category === cat
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-foreground hover:bg-muted/80"
+                  }`}
+                >
+                  {cat === "nonveg" ? "Non-Veg" : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </Button>
+              ))}
             </div>
 
-            {/* Menu Items Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {menuItems[category].map((item) => (
                 <MenuItem
@@ -235,9 +409,8 @@ export default function MenuPage() {
             </div>
           </div>
 
-          {/* Cart Summary */}
           <div className="lg:col-span-1">
-            <CartSummary cart={cart} onRemoveItem={handleRemoveFromCart} onCheckout={() => router.push("/checkout")} />
+            <CartSummary cart={cart} onRemoveItem={handleRemoveFromCart} onCheckout={handleCheckout} />
           </div>
         </div>
       </div>
